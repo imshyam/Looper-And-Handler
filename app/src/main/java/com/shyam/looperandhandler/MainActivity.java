@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
 import com.shyam.looperandhandler.databinding.ActivityMainBinding;
 
@@ -19,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             binding.setText((String) msg.obj);
+            Toast.makeText(MainActivity.this, (String) msg.obj, Toast.LENGTH_SHORT).show();
         }
     };
 
@@ -63,12 +65,38 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    Thread.sleep(3000);
+                    Thread.sleep(2000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
                 Message msg = new Message();
                 msg.obj = "Task 3 Complete";
+                handler.sendMessage(msg);
+            }
+        })
+        .executeViaOther(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(800);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                Message msg = new Message();
+                msg.obj = "Task 1 Complete, From Other Handler";
+                handler.sendMessage(msg);
+            }
+        })
+        .executeViaOther(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(1600);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                Message msg = new Message();
+                msg.obj = "Task 2 Complete, From Other Handler";
                 handler.sendMessage(msg);
             }
         });
