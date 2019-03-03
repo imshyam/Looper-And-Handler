@@ -11,7 +11,8 @@ import com.shyam.looperandhandler.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
 
-    private MyWorker worker;
+//    private MyWorker worker;
+    private HandlerWorker handlerWorker;
     private ActivityMainBinding binding;
     private Handler handler = new Handler(Looper.getMainLooper()) {
         @Override
@@ -29,9 +30,10 @@ public class MainActivity extends AppCompatActivity {
 
         binding.setText("This is bound");
 
-        worker = new MyWorker();
+//        worker = new MyWorker();
 
-        worker.execute(new Runnable() {
+        handlerWorker = new HandlerWorker();
+        handlerWorker.execute(new Runnable() {
             @Override
             public void run() {
                 try {
@@ -78,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        worker.quit();
+//        worker.quit();
+        handlerWorker.quit();
     }
 }
